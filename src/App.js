@@ -2,23 +2,57 @@ import React, { Component } from "react";
 import "./App.css";
 import Movie from "./Movie";
 
-const movieTitles = ["Matrix", "Full Metal Jacket", "Oldboy", "Star Wars"];
-
-const movieImages = [
-  "https://images-na.ssl-images-amazon.com/images/I/51EG732BV3L._SY445_.jpg",
-  "https://upload.wikimedia.org/wikipedia/en/thumb/9/99/Full_Metal_Jacket_poster.jpg/220px-Full_Metal_Jacket_poster.jpg",
-  "https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Oldboykoreanposter.jpg/220px-Oldboykoreanposter.jpg",
-  "https://images-na.ssl-images-amazon.com/images/I/81WjGytz7HL._SY445_.jpg"
-];
-
 class App extends Component {
+  state = {
+    greeting: "Hello!"
+  };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        ...this.state.movies,
+        movies: [
+          {
+            title: "Matrix",
+            poster:
+              "https://images-na.ssl-images-amazon.com/images/I/51EG732BV3L._SY445_.jpg"
+          },
+          {
+            title: "Full Metal Jacket",
+            poster:
+              "https://upload.wikimedia.org/wikipedia/en/thumb/9/99/Full_Metal_Jacket_poster.jpg/220px-Full_Metal_Jacket_poster.jpg"
+          },
+          {
+            title: "Oldboy",
+            poster:
+              "https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Oldboykoreanposter.jpg/220px-Oldboykoreanposter.jpg"
+          },
+          {
+            title: "Star Wars",
+            poster:
+              "https://images-na.ssl-images-amazon.com/images/I/81WjGytz7HL._SY445_.jpg"
+          },
+          {
+            title: "Trainspotting",
+            poster:
+              "https://m.media-amazon.com/images/M/MV5BMzA5Zjc3ZTMtMmU5YS00YTMwLWI4MWUtYTU0YTVmNjVmODZhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg"
+          }
+        ]
+      });
+    }, 5000);
+  }
+
+  _renderMovies = () => {
+    const movies = this.state.movies.map((movie, index) => {
+      return <Movie title={movie.title} poster={movie.poster} key={index} />;
+    });
+    return movies;
+  };
+
   render() {
     return (
       <div className="App">
-        <Movie title={movieTitles[0]} poster={movieImages[0]} />
-        <Movie title={movieTitles[1]} poster={movieImages[1]} />
-        <Movie title={movieTitles[2]} poster={movieImages[2]} />
-        <Movie title={movieTitles[3]} poster={movieImages[3]} />
+        {this.state.movies ? this._renderMovies() : "Loading"}
       </div>
     );
   }
